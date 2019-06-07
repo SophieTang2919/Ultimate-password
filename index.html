@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/style_password.css">
+    <title>終極密碼</title>
+</head>
+<!-- 1.輸入數字按"輸入鍵"，開始比較0~100 -->
+<!-- 2.輸入三位數以上，alert"請輸入兩位數字" -->
+<!-- 3.按"enter鍵"也可以開始遊戲 未完成 -->
+
+<body>
+    <div class="container bg-dark">
+        <h2 class="text-center text-white">終極密碼</h2>
+        <ul id="userdata" class="list-group">
+            <li class="list-group-item text-center h1 font-weight-normal">
+                0~99
+            </li>
+        </ul>
+        <div class="input-group my-2 justify-content-center">
+            <button type="button" class="btn btn-secondary" onclick="dostart()">開始遊戲</button>
+        </div>
+        <div class="input-group my-3 justify-content-center">
+            <input type="text" class="text-center h3 font-weight-normal" id="userenter">
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block input-pad">1</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block input-pad">2</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block input-pad">3</button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block input-pad">4</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block input-pad">5</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block input-pad">6</button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block input-pad">7</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block input-pad">8</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block input-pad">9</button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block" onclick="doclear()">清除</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block input-pad">0</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-secondary btn-block" id="enterdata" onclick="doenter()">輸入</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+        var user = document.getElementById("userenter");
+        var number = 0;
+        var minnum = 0;
+        var maxnum = 99;
+        //清除鍵
+        function doclear() {
+            user.value = "";
+        }
+
+        function dostart() {
+            number = Math.round(Math.random() * 100); //產生亂數0~99
+            // alert(number); //測試用
+        }
+
+        function doenter() {
+            var usernumber = parseInt(user.value); //輸入的值變成數值
+            if (usernumber == number) {
+                alert("恭喜過關");
+                //重新制定minnum與maxnum的值
+                minnum = 0;
+                maxnum = 99;
+            }
+            else if (usernumber < number && usernumber > minnum) {
+                minnum = usernumber;
+            }
+            else if (usernumber > number && usernumber < maxnum) {
+                maxnum = usernumber;
+            }
+            document.getElementById("userdata").innerHTML = "<li class='list-group-item text-center h1 font-weight-normal'>" + minnum + "~" + maxnum + "</li>";
+            user.value = "";
+        }
+        //數字鍵可以按
+        function inder() {
+            var userenter = document.getElementById("userenter");
+            var text = this.innerHTML;
+            userenter.value += text;
+        }
+        var inputButton = document.getElementsByClassName("input-pad");
+        for (var i = 0; i < inputButton.length; i++) {
+            inputButton[i].onclick = inder;
+        }
+        //enter鍵
+        // document.getElementById("enterdata").onkeydown = function (event) {
+        //     if (event.keyCode == 13) {
+        //         doenter();
+        //     }
+        // }
+    </script>
+</body>
+
+</html>
